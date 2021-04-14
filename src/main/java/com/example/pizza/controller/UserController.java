@@ -18,12 +18,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity registration(@RequestBody UserEntity user){
         try {
-            userService.registration(user);
-            return ResponseEntity.ok("User was saved");
+            return ResponseEntity.ok(userService.registration(user));
         }catch (UserAlreadyExistException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Something wrong!");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -33,6 +32,17 @@ public class UserController {
             return ResponseEntity.ok(userService.getOne(id));
         }catch (UserNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Something wrong!");
+        }
+    }
+
+    @GetMapping("/")
+    public ResponseEntity getUsers(){
+        try {
+
+            return ResponseEntity.ok(userService.getAll());
+
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Something wrong!");
         }

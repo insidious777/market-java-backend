@@ -1,6 +1,5 @@
 package com.example.pizza.entity;
 
-import com.example.pizza.model.Todo;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,19 +12,20 @@ public class UserEntity {
     private String username;
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<TodoEntity> todos;
-
-    public UserEntity() {
-    }
-
-    public List<TodoEntity> getTodos() {
-        return todos;
-    }
-
-    public void setTodos(List<TodoEntity> todos) {
-        this.todos = todos;
-    }
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+//    private List<TodoEntity> todos;
+//
+//    public UserEntity() {
+//
+//    }
+//
+//    public List<TodoEntity> getTodos() {
+//        return todos;
+//    }
+//
+//    public void setTodos(List<TodoEntity> todos) {
+//        this.todos = todos;
+//    }
 
     public Long getId() {
         return id;
