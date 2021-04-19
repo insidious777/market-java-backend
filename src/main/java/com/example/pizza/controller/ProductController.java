@@ -13,9 +13,11 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity createProduct(@RequestBody ProductEntity product){
+    public ResponseEntity createProduct(@RequestBody ProductEntity product, @RequestParam Long userId){
+        System.out.println(product);
+        System.out.println(userId);
         try {
-            return ResponseEntity.ok(productService.createProduct(product));
+            return ResponseEntity.ok(productService.createProduct(product, userId));
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Something wrong");
         }

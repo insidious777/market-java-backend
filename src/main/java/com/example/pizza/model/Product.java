@@ -7,13 +7,23 @@ public class Product {
     private Long id;
     private String title;
     private String description;
+    private Long ownerId;
 
     public static Product toModel(ProductEntity entity) {
         Product model = new Product();
         model.setId(entity.getId());
         model.setDescription(entity.getDescription());
         model.setTitle(entity.getTitle());
+        model.setOwnerId(entity.getId());
         return model;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Long getId() {

@@ -5,6 +5,7 @@ import com.example.pizza.entity.UserEntity;
 import com.example.pizza.model.Product;
 import com.example.pizza.model.User;
 import com.example.pizza.repository.ProductRepo;
+import com.example.pizza.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +18,19 @@ public class ProductService {
 
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private UserRepo userRepo;
 
-    public Product createProduct(ProductEntity product)  {
-        ProductEntity newProduct = productRepo.save(product);
-        return Product.toModel(newProduct);
+    public Product createProduct(ProductEntity product,  Long userId)  {
+        UserEntity user = userRepo.findById(userId).get();
+        product.setUser(user);
+        productRepo.save(product);
+        //ProductEntity newProduct = productRepo.save(product);
+        return Product.toModel(product);
     }
 
     public Product getOne(Long id)  {
-        System.out.println(id);
         ProductEntity product = productRepo.findById(id).get();
-        System.out.println(product);
         return Product.toModel(product);
     }
 
