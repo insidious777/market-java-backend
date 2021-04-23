@@ -9,18 +9,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity registration(@RequestBody UserEntity user){
         try {
             return ResponseEntity.ok(userService.registration(user));
         }catch (UserAlreadyExistException e){
             return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody Map<String, String> params){
+        try {
+            return ResponseEntity.ok(userService.login(params));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -14,8 +14,6 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity createProduct(@RequestBody ProductEntity product, @RequestParam Long userId){
-        System.out.println(product);
-        System.out.println(userId);
         try {
             return ResponseEntity.ok(productService.createProduct(product, userId));
         }catch (Exception e){
@@ -49,12 +47,5 @@ public class ProductController {
             return ResponseEntity.badRequest().body("Something wrong!");
         }
     }
-//    @PutMapping
-//    public ResponseEntity completeTodo(@RequestParam Long id){
-//        try {
-//            return ResponseEntity.ok(todoService.completeTodo(id));
-//        }catch (Exception e){
-//            return ResponseEntity.badRequest().body("Something wrong");
-//        }
-//    }
+
 }

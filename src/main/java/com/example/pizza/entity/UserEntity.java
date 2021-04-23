@@ -12,6 +12,7 @@ public class UserEntity {
     private Long id;
     private String username;
     private String password;
+    private String token;
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -20,6 +21,14 @@ public class UserEntity {
 
     public UserEntity() {
 
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public List<ProductEntity> getProducts() {
