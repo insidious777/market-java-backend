@@ -13,9 +13,9 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity createProduct(@RequestBody ProductEntity product, @RequestParam Long userId){
+    public ResponseEntity createProduct(@RequestBody ProductEntity product, @RequestHeader("Authorization") String header){
         try {
-            return ResponseEntity.ok(productService.createProduct(product, userId));
+            return ResponseEntity.ok(productService.createProduct(product, header));
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Something wrong");
         }
