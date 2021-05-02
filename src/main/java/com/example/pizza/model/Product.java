@@ -8,14 +8,24 @@ public class Product {
     private String title;
     private String description;
     private Long ownerId;
+    private String category;
 
     public static Product toModel(ProductEntity entity) {
         Product model = new Product();
         model.setId(entity.getId());
         model.setDescription(entity.getDescription());
         model.setTitle(entity.getTitle());
-        model.setOwnerId(entity.getId());
+        model.setOwnerId(entity.getUser().getId());
+        model.setCategory(entity.getCategory().getName());
         return model;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Long getOwnerId() {

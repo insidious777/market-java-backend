@@ -37,6 +37,15 @@ public class UserController {
         }
     }
 
+//    @PostMapping("/cart")
+//    public ResponseEntity cart(@RequestParam Long product_id, @RequestHeader("Authorization") String header){
+//        try {
+//            return ResponseEntity.ok(userService.addToCart(product_id, header));
+//        }catch (Exception e){
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
+
     @GetMapping
     public ResponseEntity getOneUser(@RequestParam Long id){
         try {

@@ -1,9 +1,11 @@
 package com.example.pizza.service;
 
+import com.example.pizza.entity.CategoryEntity;
 import com.example.pizza.entity.ProductEntity;
 import com.example.pizza.entity.UserEntity;
 import com.example.pizza.model.Product;
 import com.example.pizza.model.User;
+import com.example.pizza.repository.CategoryRepo;
 import com.example.pizza.repository.ProductRepo;
 import com.example.pizza.repository.UserRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,15 +27,18 @@ public class ProductService {
     private ProductRepo productRepo;
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private CategoryRepo categoryRepo;
 
-    public Product createProduct(ProductEntity product,  String header) throws ParseException {
-        decodeJWT(header);
-        //UserEntity user = userRepo.findById(userId).get();
-        long id =0;
-        UserEntity user = userRepo.findById(id).get();
+    public Product createProduct(ProductEntity product,  String header, Long category_id) throws ParseException {
+        String username = getUsernameFromJWT(header);
+        UserEntity user = userRepo.findByUsername(username);
+
         product.setUser(user);
+        System.out.println("current user:"+ user.getId());
+        CategoryEntity category = categoryRepo.findById(category_id).get();
+        product.setCategory(category);
         productRepo.save(product);
-        //ProductEntity newProduct = productRepo.save(product);
         return Product.toModel(product);
     }
 
@@ -57,18 +62,13 @@ public class ProductService {
         return id;
     }
 
-    public String decodeJWT(String header) throws ParseException {
+    public String getUsernameFromJWT(String header) throws ParseException {
         String token = header.split("\\s+")[1];
         String[] chunks = token.split("\\.");
         Base64.Decoder decoder = Base64.getDecoder();
         String payload = new String(decoder.decode(chunks[1]));
-        System.out.println(payload);
-        Object obj = new JSONParser().parse(payload);
-        System.out.println(obj);
-//        JSONObject jo = (JSONObject) obj;
-//        System.out.println(jo);
-//        String username = (String) jo.get("sub");
-//        System.out.println(username);
-        return "gfsd";
+        String[] tokenParts = payload.split(",");
+        String[] tokenNameParts = tokenParts[1].split("\"");
+        return tokenNameParts[3];
     }
 }

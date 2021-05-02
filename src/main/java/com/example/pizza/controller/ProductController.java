@@ -13,11 +13,11 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity createProduct(@RequestBody ProductEntity product, @RequestHeader("Authorization") String header){
+    public ResponseEntity createProduct(@RequestBody ProductEntity product,@RequestParam Long category_id, @RequestHeader("Authorization") String header){
         try {
-            return ResponseEntity.ok(productService.createProduct(product, header));
+            return ResponseEntity.ok(productService.createProduct(product, header, category_id));
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Something wrong");
+            return ResponseEntity.badRequest().body(e);
         }
     }
 
@@ -35,7 +35,7 @@ public class ProductController {
         try {
             return ResponseEntity.ok(productService.getAll());
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Something wrong");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
